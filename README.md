@@ -35,6 +35,8 @@ opencv-python
 
 If you use google colab, you don't need to set up. Just run and run!! 
 
+##
+
 ## 1. Usage
 You only run `Fast-Style-Transfer-PyTorch.ipynb`. 
 
@@ -42,8 +44,12 @@ Or you can use Google Colab for free!! This is [colab link](https://colab.resear
 
 After downloading ipynb, just upload to your google drive. and run!
 
+##
+
 ## 2. Tutorial & Code implementation Blog Posting (Korean Only)
 [“Fast Style Transfer PyTorch Tutorial”](https://hoya012.github.io/blog/Fast-Style-Transfer-Tutorial/)  
+
+##
 
 ## 3. Dataset download 
 For simplicty, i use **COCO 2017 validation set** instead of **COCO 2014 training set**.
@@ -52,6 +58,8 @@ For simplicty, i use **COCO 2017 validation set** instead of **COCO 2014 trainin
 - COCO 2017 validation: about 5000 images / 1GB –> i will use training epoch multiplied by 16 times
 
 You can download COCO 2017 validation dataset in [this link](http://images.cocodataset.org/zips/val2017.zip)
+
+##
 
 ## 4. Link to google drive and upload files to google drive
 If you use colab, you can simply link ipynb to google drive.
@@ -72,6 +80,8 @@ style_image_sample = Image.open(style_image_location, 'r')
 display(style_image_sample)
 ```
 
+##
+
 ## 5. Transfer learning, inference from checkpoint.
 Since google colab only uses the GPU for 8 hours, we need to restart it from where it stopped.
 
@@ -87,6 +97,8 @@ if transfer_learning:
   transformer.load_state_dict(checkpoint['model_state_dict'])
   transformer.to(device)
 ```
+
+##
 
 ## 6. Training phase
 
@@ -156,6 +168,8 @@ if running_option == "training":
                 transformer.to(device).train()  
 ```
 
+##
+
 ## 7. Test(Inference) Phase
 I use video for demo. But you can use only single image. ( `running_option == "test"` )
 The code below shows how to apply a style transfer with video as input and save the video as output.
@@ -211,6 +225,8 @@ if running_option == "test_video":
         out.release()
         cv2.destroyAllWindows()
 ```
+
+##
 
 ## Reference
 - <a href="https://github.com/pytorch/examples/tree/master/fast_neural_style" target="_blank"> pytorch example code </a>
