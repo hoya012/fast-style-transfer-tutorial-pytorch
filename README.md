@@ -1,7 +1,7 @@
 # fast-style-transfer-tutorial-pytorch
 Simple Tutorials &amp; Code Implementation of fast-style-transfer(Perceptual Losses for Real-Time Style Transfer and Super-Resolution, 2016 ECCV) using PyTorch. This code is based on [pytorch example codes](https://github.com/pytorch/examples/tree/master/fast_neural_style)
 
-### Style Image frome Battle Ground
+### Style Image from Battle Ground Game
 <p align="center">
   <img width="700" src="https://github.com/hoya012/hoya012.github.io/blob/master/assets/img/fast_style_transfer/3.PNG">
 </p>
