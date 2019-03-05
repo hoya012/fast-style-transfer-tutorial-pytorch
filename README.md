@@ -155,3 +155,64 @@ if running_option == "training":
 
                 transformer.to(device).train()  
 ```
+
+## 7. Test(Inference) Phase
+I use video for demo. But you can use only single image. ( `running_option == "test"` )
+The code below shows how to apply a style transfer with video as input and save the video as output.
+
+```python
+if running_option == "test_video":
+    
+    with torch.no_grad():
+        style_model = TransformerNet()
+
+        ckpt_model_path = os.path.join(checkpoint_dir, "ckpt_epoch_63_batch_id_500.pth")
+        checkpoint = torch.load(ckpt_model_path, map_location=device)
+
+        # remove saved deprecated running_* keys in InstanceNorm from the checkpoint
+        for k in list(checkpoint.keys()):
+            if re.search(r'in\d+\.running_(mean|var)$', k):
+                del checkpoint[k]
+
+        style_model.load_state_dict(checkpoint['model_state_dict'])
+        style_model.to(device)
+
+        cap = cv2.VideoCapture("/content/gdrive/My Drive/Colab_Notebooks/data/mirama_demo.mp4")
+
+        frame_cnt = 0
+        
+        fourcc = cv2.VideoWriter_fourcc(*'XVID') #cv2.VideoWriter_fourcc(*'MP42')
+        out = cv2.VideoWriter('/content/gdrive/My Drive/Colab_Notebooks/data/mirama_demo_result.avi', fourcc, 60.0, (1920,1080))
+
+        while(cap.isOpened()):
+            ret, frame = cap.read()
+            
+            try:
+              frame = frame[:,:,::-1] - np.zeros_like(frame)
+            except:
+              break
+              
+            print(frame_cnt, "th frame is loaded!")
+
+            content_image = frame
+            content_transform = transforms.Compose([
+                transforms.ToTensor(),
+                transforms.Lambda(lambda x: x.mul(255))
+            ])
+            content_image = content_transform(content_image)
+            content_image = content_image.unsqueeze(0).to(device)
+
+            output = style_model(content_image).cpu()
+            #save_image("/content/gdrive/My Drive/Colab_Notebooks/data/vikendi_video_result/" + str(frame_cnt) +".png", output[0])
+            out.write(post_process_image(output[0]))
+            frame_cnt += 1
+            
+        cap.release()
+        out.release()
+        cv2.destroyAllWindows()
+```
+
+## Reference
+- <a href="https://github.com/pytorch/examples/tree/master/fast_neural_style" target="_blank"> pytorch example code </a>
+- <a href="https://ezgif.com/video-to-gif" target="_blank"> avi --> gif for demo </a>
+- <a href="https://colab.research.google.com/" target="_blank"> google colaboratory </a>
