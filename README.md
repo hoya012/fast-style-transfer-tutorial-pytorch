@@ -174,6 +174,8 @@ if running_option == "training":
 I use video for demo. But you can use only single image. ( `running_option == "test"` )
 The code below shows how to apply a style transfer with video as input and save the video as output.
 
+If you download [trained weight](https://github.com/hoya012/fast-style-transfer-tutorial-pytorch/blob/master/ckpt_epoch_63_batch_id_500.pth), you can test without any training!
+
 ```python
 if running_option == "test_video":
     
